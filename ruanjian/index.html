@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>首页 - 羽球综合服务平台</title>
+  <!-- Tailwind CSS v3 CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mint: { DEFAULT: '#4ECDC4', light: '#A8E6CF', dark: '#3BA99C' },
+            badminton: { white: '#FAFAFA', gray: '#2D3436' }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- 公共样式 -->
+  <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+  <!-- ========== 顶部导航栏（由 common.js 渲染） ========== -->
+  <div id="topNav"></div>
+
+  <div class="page-layout">
+    <!-- ========== 侧边分类栏 ========== -->
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <!-- ========== 主内容区 ========== -->
+    <main class="main-content">
+      <!-- 顶部轮播图 -->
+      <section class="mb-8" id="bannerSection">
+        <div class="carousel" id="mainCarousel">
+          <div class="carousel-inner" id="carouselInner"></div>
+        </div>
+      </section>
+
+      <!-- 功能快捷入口 -->
+      <section class="mb-8">
+        <h2 class="text-xl font-bold mb-4 text-gray-800">⚡ 功能快捷入口</h2>
+        <div class="quick-entry-grid" id="quickEntries"></div>
+      </section>
+
+      <!-- 数据卡片区 -->
+      <section class="home-data-section mb-8">
+        <div class="home-data-grid">
+          <!-- 近期热门赛事 -->
+          <div class="card scalable-card" id="eventsCard">
+            <div class="home-card-head">
+              <h3 class="home-card-title">🏆 近期热门赛事</h3>
+              <div class="scale-controls scale-controls-compact" title="缩放内容">
+                <button type="button" class="scale-btn" data-scale-out="events" aria-label="缩小">−</button>
+                <input type="range" class="scale-slider" data-scale-slider="events" min="70" max="150" step="5" value="100">
+                <button type="button" class="scale-btn" data-scale-in="events" aria-label="放大">+</button>
+                <button type="button" class="scale-btn scale-btn-reset" data-scale-reset="events" title="重置">↺</button>
+              </div>
+            </div>
+            <div class="home-card-filters">
+              <div class="card-mini-tabs" id="eventFilter">
+                <span class="card-mini-tab active" data-filter="all">全部</span>
+                <span class="card-mini-tab" data-filter="报名中">报名中</span>
+                <span class="card-mini-tab" data-filter="即将开始">即将开始</span>
+              </div>
+            </div>
+            <div class="scalable-viewport" data-viewport="events">
+              <div class="scalable-scaler" data-scaler="events">
+                <div class="home-card-body" id="eventsList"></div>
+              </div>
+              <div class="scalable-resize-handle" data-resize="events" title="拖动调整高度（三栏同步）">
+                <span class="resize-grip"></span>
+              </div>
+            </div>
+          </div>
+          <!-- 球员战绩 -->
+          <div class="card scalable-card" id="playerStatsCard">
+            <div class="home-card-head">
+              <h3 class="home-card-title">📊 球员战绩排行</h3>
+              <div class="scale-controls scale-controls-compact" title="缩放内容">
+                <button type="button" class="scale-btn" data-scale-out="playerStats" aria-label="缩小">−</button>
+                <input type="range" class="scale-slider" data-scale-slider="playerStats" min="70" max="150" step="5" value="100">
+                <button type="button" class="scale-btn" data-scale-in="playerStats" aria-label="放大">+</button>
+                <button type="button" class="scale-btn scale-btn-reset" data-scale-reset="playerStats" title="重置">↺</button>
+              </div>
+            </div>
+            <div class="home-card-filters">
+              <div class="card-mini-tabs" id="playerFilter">
+                <span class="card-mini-tab active" data-filter="all">全部</span>
+                <span class="card-mini-tab" data-filter="男单">男单</span>
+                <span class="card-mini-tab" data-filter="女单">女单</span>
+                <span class="card-mini-tab" data-filter="双打">双打</span>
+              </div>
+            </div>
+            <div class="scalable-viewport" data-viewport="playerStats">
+              <div class="scalable-scaler" data-scaler="playerStats">
+                <div class="home-card-body" id="playerStatsList"></div>
+              </div>
+              <div class="scalable-resize-handle" data-resize="playerStats" title="拖动调整高度（三栏同步）">
+                <span class="resize-grip"></span>
+              </div>
+            </div>
+          </div>
+          <!-- 热门教学视频 -->
+          <div class="card scalable-card" id="hotVideosCard">
+            <div class="home-card-head">
+              <h3 class="home-card-title">🔥 热门教学视频</h3>
+              <div class="scale-controls scale-controls-compact" title="缩放内容">
+                <button type="button" class="scale-btn" data-scale-out="hotVideos" aria-label="缩小">−</button>
+                <input type="range" class="scale-slider" data-scale-slider="hotVideos" min="70" max="150" step="5" value="100">
+                <button type="button" class="scale-btn" data-scale-in="hotVideos" aria-label="放大">+</button>
+                <button type="button" class="scale-btn scale-btn-reset" data-scale-reset="hotVideos" title="重置">↺</button>
+              </div>
+            </div>
+            <div class="home-card-filters">
+              <span class="home-card-filter-hint">按播放量排行</span>
+            </div>
+            <div class="scalable-viewport" data-viewport="hotVideos">
+              <div class="scalable-scaler" data-scaler="hotVideos">
+                <div class="home-card-body" id="hotVideosList"></div>
+              </div>
+              <div class="scalable-resize-handle" data-resize="hotVideos" title="拖动调整高度（三栏同步）">
+                <span class="resize-grip"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 资讯板块 -->
+      <section class="mb-8">
+        <h2 class="text-xl font-bold mb-4 text-gray-800">📰 羽球资讯</h2>
+        <div class="filter-bar mb-4" id="newsFilter">
+          <span class="filter-chip active" data-category="all">全部</span>
+          <span class="filter-chip" data-category="行业新闻">行业新闻</span>
+          <span class="filter-chip" data-category="装备测评">装备测评</span>
+          <span class="filter-chip" data-category="新手入门">新手入门</span>
+        </div>
+        <div class="grid grid-cols-3 gap-6" id="newsGrid"></div>
+      </section>
+
+      <!-- 资讯详情弹窗 -->
+      <div class="modal-overlay" id="newsDetailModal">
+        <div class="modal modal-lg">
+          <div class="modal-header">
+            <h3 id="newsDetailTitle">资讯详情</h3>
+            <button class="modal-close">&times;</button>
+          </div>
+          <div class="modal-body" id="newsDetailBody"></div>
+        </div>
+      </div>
+
+      <!-- 热门视频播放弹窗 -->
+      <div class="modal-overlay" id="hotVideoModal">
+        <div class="modal modal-lg">
+          <div class="modal-header">
+            <h3 id="hotVideoTitle">教学视频</h3>
+            <button class="modal-close">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div id="hotVideoPlayerWrap"></div>
+            <p class="text-sm text-gray-500 mt-3" id="hotVideoDesc"></p>
+            <a href="video-analysis.html" class="btn btn-primary mt-3 inline-block">🎬 用 AI 分析此教学</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 赛事详情弹窗 -->
+      <div class="modal-overlay" id="eventDetailModal">
+        <div class="modal modal-lg">
+          <div class="modal-header">
+            <h3 id="eventDetailTitle">赛事详情</h3>
+            <button class="modal-close">&times;</button>
+          </div>
+          <div class="modal-body" id="eventDetailBody"></div>
+        </div>
+      </div>
+
+      <!-- 球员详情弹窗 -->
+      <div class="modal-overlay" id="playerDetailModal">
+        <div class="modal modal-lg">
+          <div class="modal-header">
+            <h3 id="playerDetailTitle">球员战绩</h3>
+            <button class="modal-close">&times;</button>
+          </div>
+          <div class="modal-body" id="playerDetailBody"></div>
+        </div>
+      </div>
+
+      <!-- 球员文章阅读弹窗 -->
+      <div class="modal-overlay" id="playerArticleModal">
+        <div class="modal modal-lg">
+          <div class="modal-header">
+            <h3 id="playerArticleTitle">球员文章</h3>
+            <button class="modal-close">&times;</button>
+          </div>
+          <div class="modal-body" id="playerArticleBody"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ========== 页脚 ========== -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-section">
+        <h4>关于我们</h4>
+        <p>羽球综合服务平台致力于为羽毛球爱好者提供视频AI分析、战术学习、社区交流的一站式服务。</p>
+      </div>
+      <div class="footer-section">
+        <h4>使用帮助</h4>
+        <a href="video-analysis.html">如何进行视频AI分析</a>
+        <a href="tactics.html">战术库使用指南</a>
+        <a href="community.html">圈子发帖教程</a>
+        <a href="profile.html">个人中心说明</a>
+      </div>
+      <div class="footer-section">
+        <h4>快捷链接</h4>
+        <a href="video-analysis.html">视频分析</a>
+        <a href="tactics.html">战术洞察</a>
+        <a href="community.html">羽毛球圈子</a>
+        <a href="profile.html">个人中心</a>
+      </div>
+      <div class="footer-section">
+        <h4>联系我们</h4>
+        <a href="javascript:void(0)" id="feedbackBtn">意见反馈</a>
+        <p>邮箱: support@badminton.com</p>
+        <p>测试账号: demo / 123456</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 羽球综合服务平台 All Rights Reserved | 数据本地存储，仅供学习演示</p>
+    </div>
+  </footer>
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/video-library.js"></script>
+  <script src="js/community-seed.js"></script>
+  <script src="js/player-extra.js"></script>
+  <script src="js/venue-images.js"></script>
+  <script src="js/mock-data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>

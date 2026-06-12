@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>战术洞察库 - 羽球综合服务平台</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { mint: { DEFAULT: '#4ECDC4', light: '#A8E6CF', dark: '#3BA99C' } } } }
+    }
+  </script>
+  <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+  <div id="topNav"></div>
+
+  <div class="page-layout">
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <main class="main-content">
+      <h1 class="text-2xl font-bold mb-6 text-gray-800">📖 战术洞察库</h1>
+
+      <!-- ========== 筛选栏 ========== -->
+      <div class="filter-bar" id="tacticFilters">
+        <div class="w-full mb-2 font-semibold text-sm text-gray-600">分类</div>
+        <span class="filter-chip active" data-filter="category" data-value="all">全部</span>
+        <span class="filter-chip" data-filter="category" data-value="单打战术">单打战术</span>
+        <span class="filter-chip" data-filter="category" data-value="双打战术">双打战术</span>
+        <span class="filter-chip" data-filter="category" data-value="混双战术">混双战术</span>
+        <span class="filter-chip" data-filter="category" data-value="前场后场打法">前场后场</span>
+        <span class="filter-chip" data-filter="category" data-value="防守反击">防守反击</span>
+        <span class="filter-chip" data-filter="category" data-value="网前博弈">网前博弈</span>
+      </div>
+      <div class="filter-bar">
+        <div class="w-full mb-2 font-semibold text-sm text-gray-600">水平</div>
+        <span class="filter-chip active" data-filter="level" data-value="all">全部</span>
+        <span class="filter-chip" data-filter="level" data-value="新手">新手</span>
+        <span class="filter-chip" data-filter="level" data-value="进阶">进阶</span>
+        <span class="filter-chip" data-filter="level" data-value="专业">专业</span>
+      </div>
+      <div class="filter-bar">
+        <div class="w-full mb-2 font-semibold text-sm text-gray-600">球员</div>
+        <div class="search-box flex-1">
+          <input type="text" id="playerFilter" placeholder="输入球员名筛选，如：石宇奇">
+          <button class="btn btn-sm btn-primary" id="playerFilterBtn">筛选</button>
+        </div>
+        <div class="flex gap-2 ml-4">
+          <span class="filter-chip active" data-sort="likes">🔥 热门</span>
+          <span class="filter-chip" data-sort="newest">🕐 最新</span>
+        </div>
+      </div>
+
+      <!-- ========== 热门推荐 ========== -->
+      <section class="mb-6" id="pinnedSection">
+        <h2 class="text-lg font-bold mb-4">📌 置顶推荐</h2>
+        <div class="grid grid-cols-3 gap-4" id="pinnedTactics"></div>
+      </section>
+
+      <!-- ========== 战术列表 ========== -->
+      <section>
+        <h2 class="text-lg font-bold mb-4">全部战术 <span class="text-sm font-normal text-gray-500" id="tacticCount"></span></h2>
+        <div class="grid grid-cols-3 gap-4" id="tacticGrid"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ========== 战术详情弹窗 ========== -->
+  <div class="modal-overlay" id="tacticDetailModal">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <h3 id="tacticDetailTitle">战术详情</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body" id="tacticDetailBody">
+        <!-- 动态填充 -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="tacticFavoriteBtn">⭐ 收藏</button>
+        <button class="btn btn-secondary" id="tacticAnalyzeBtn">🎬 跳转视频分析</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/video-library.js"></script>
+  <script src="js/community-seed.js"></script>
+  <script src="js/player-extra.js"></script>
+  <script src="js/venue-images.js"></script>
+  <script src="js/mock-data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/tactics.js"></script>
+</body>
+</html>
