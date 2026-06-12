@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人中心 - 羽球综合服务平台</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { mint: { DEFAULT: '#4ECDC4', light: '#A8E6CF', dark: '#3BA99C' } } } }
+    }
+  </script>
+  <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+  <div id="topNav"></div>
+
+  <div class="page-layout">
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <main class="main-content">
+      <!-- ========== 未登录提示 ========== -->
+      <div id="guestView" class="text-center py-20">
+        <div class="text-6xl mb-4">👤</div>
+        <h2 class="text-xl font-bold mb-4">尚未登录</h2>
+        <p class="text-gray-500 mb-6">可直接游客登录体验全部功能，或注册账号永久保存数据</p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <button class="btn btn-secondary" id="guestEnterBtn">🎫 游客登录</button>
+          <button class="btn btn-primary" id="guestLoginBtn">登录 / 注册</button>
+        </div>
+        <p class="text-sm text-gray-400 mt-4">已有账号: demo / 123456</p>
+      </div>
+
+      <!-- ========== 已登录视图 ========== -->
+      <div id="userView" style="display:none;">
+        <!-- 个人信息头部 -->
+        <div class="profile-header" id="profileHeader"></div>
+
+        <!-- 数据统计 -->
+        <div class="stats-grid mb-6" id="statsGrid"></div>
+
+        <!-- Tab 切换 -->
+        <div class="profile-tabs" id="profileTabs">
+          <div class="profile-tab active" data-tab="assets">我的资产</div>
+          <div class="profile-tab" data-tab="notifications">我的动态</div>
+          <div class="profile-tab" data-tab="settings">设置</div>
+        </div>
+
+        <!-- 我的资产 -->
+        <div id="tabAssets">
+          <div class="flex gap-2 mb-4 flex-wrap" id="assetSubTabs">
+            <span class="filter-chip active" data-asset="videos">收藏视频</span>
+            <span class="filter-chip" data-asset="tactics">收藏战术</span>
+            <span class="filter-chip" data-asset="posts">发布的帖子</span>
+            <span class="filter-chip" data-asset="analyses">分析视频</span>
+            <span class="filter-chip" data-asset="history">分析记录</span>
+            <span class="filter-chip" data-asset="coachings">教练预约</span>
+          </div>
+          <div class="asset-grid" id="assetGrid"></div>
+        </div>
+
+        <!-- 我的动态 -->
+        <div id="tabNotifications" style="display:none;">
+          <div id="notificationsList"></div>
+        </div>
+
+        <!-- 设置 -->
+        <div id="tabSettings" style="display:none;">
+          <div class="card max-w-lg">
+            <div class="card-body space-y-4">
+              <button class="btn btn-secondary w-full" id="editProfileBtn">✏️ 修改个人资料</button>
+              <button class="btn btn-secondary w-full" id="changePwdBtn">🔑 修改密码</button>
+              <div class="form-group">
+                <label class="form-label flex items-center gap-2">
+                  <input type="checkbox" id="notifyToggle" checked> 消息通知
+                </label>
+              </div>
+              <button class="btn btn-danger w-full" id="clearCacheBtn">🗑️ 清除本地缓存</button>
+              <button class="btn btn-secondary w-full" id="logoutBtn">🚪 退出登录</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- 修改密码弹窗 -->
+  <div class="modal-overlay" id="changePwdModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>修改密码</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="changePwdForm">
+          <div class="form-group">
+            <label class="form-label">原密码</label>
+            <input type="password" class="form-input" id="oldPassword">
+          </div>
+          <div class="form-group">
+            <label class="form-label">新密码</label>
+            <input type="password" class="form-input" id="newPassword">
+          </div>
+          <div class="form-group">
+            <label class="form-label">确认新密码</label>
+            <input type="password" class="form-input" id="newPassword2">
+          </div>
+          <button type="submit" class="btn btn-primary w-full">确认修改</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/video-library.js"></script>
+  <script src="js/community-seed.js"></script>
+  <script src="js/player-extra.js"></script>
+  <script src="js/venue-images.js"></script>
+  <script src="js/mock-data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

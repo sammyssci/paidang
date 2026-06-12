@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>教练指导 - 羽球综合服务平台</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { mint: { DEFAULT: '#4ECDC4', light: '#A8E6CF', dark: '#3BA99C' } } } }
+    }
+  </script>
+  <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+  <div id="topNav"></div>
+
+  <div class="page-layout">
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <main class="main-content">
+      <div class="coaching-hero mb-6">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-800">🎯 教练指导 · 线下教学</h1>
+          <p class="text-gray-500 mt-1">选择羽毛球馆与认证教练，预约一对一或小班线下课程</p>
+        </div>
+        <button class="btn btn-secondary" id="myBookingsBtn">📋 我的预约</button>
+      </div>
+
+      <!-- 预约进度条 -->
+      <div class="booking-steps mb-6" id="bookingSteps">
+        <div class="booking-step active" data-step="1"><span class="step-num">1</span> 选择球馆</div>
+        <div class="booking-step" data-step="2"><span class="step-num">2</span> 选择教练</div>
+        <div class="booking-step" data-step="3"><span class="step-num">3</span> 确认预约</div>
+      </div>
+
+      <!-- 城市筛选 -->
+      <div class="filter-bar mb-4" id="cityFilter">
+        <div class="w-full mb-2 font-semibold text-sm text-gray-600">城市</div>
+        <span class="filter-chip active" data-city="all">全部</span>
+        <span class="filter-chip" data-city="北京">北京</span>
+        <span class="filter-chip" data-city="上海">上海</span>
+        <span class="filter-chip" data-city="广州">广州</span>
+        <span class="filter-chip" data-city="深圳">深圳</span>
+        <span class="filter-chip" data-city="成都">成都</span>
+        <span class="filter-chip" data-city="郑州">郑州</span>
+      </div>
+
+      <div class="search-box mb-6">
+        <input type="text" id="venueSearch" placeholder="搜索球馆名称或区域...">
+        <button class="btn btn-sm btn-primary" id="venueSearchBtn">搜索</button>
+      </div>
+
+      <!-- Step 1: 球馆列表 -->
+      <section id="stepVenues">
+        <h2 class="text-lg font-bold mb-4">🏸 合作羽毛球馆 <span class="text-sm font-normal text-gray-500" id="venueCount"></span></h2>
+        <div class="venue-grid" id="venueGrid"></div>
+      </section>
+
+      <!-- Step 2: 教练列表 -->
+      <section id="stepCoaches" style="display:none;">
+        <div class="selected-venue-bar mb-4" id="selectedVenueBar"></div>
+        <h2 class="text-lg font-bold mb-4">👨‍🏫 驻场教练 <span class="text-sm font-normal text-gray-500" id="coachCount"></span></h2>
+        <div class="filter-bar mb-4" id="coachFilter">
+          <span class="filter-chip active" data-specialty="all">全部专长</span>
+          <span class="filter-chip" data-specialty="新手">新手入门</span>
+          <span class="filter-chip" data-specialty="单打">单打</span>
+          <span class="filter-chip" data-specialty="双打">双打</span>
+          <span class="filter-chip" data-specialty="青少年">青少年</span>
+        </div>
+        <div class="coach-grid" id="coachGrid"></div>
+        <button class="btn btn-secondary mt-4" id="backToVenuesBtn">← 重新选择球馆</button>
+      </section>
+    </main>
+  </div>
+
+  <!-- 教练详情弹窗 -->
+  <div class="modal-overlay" id="coachDetailModal">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <h3 id="coachDetailTitle">教练详情</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body" id="coachDetailBody"></div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="coachBookBtn">📅 立即预约</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 预约弹窗 -->
+  <div class="modal-overlay" id="bookingModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>确认线下预约</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="booking-summary mb-4" id="bookingSummary"></div>
+        <form id="bookingForm">
+          <div class="form-group">
+            <label class="form-label">上课日期</label>
+            <select class="form-select" id="bookingDate"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">时间段</label>
+            <div class="time-slot-grid" id="timeSlotGrid"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">课程类型</label>
+            <select class="form-select" id="bookingCourseType">
+              <option value="私教1对1">私教1对1（1小时）</option>
+              <option value="双人对练">双人对练（1.5小时）</option>
+              <option value="小班团课">小班团课（2小时，3人起）</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">联系电话</label>
+            <input type="text" class="form-input" id="bookingPhone" placeholder="便于教练联系您">
+          </div>
+          <div class="form-group">
+            <label class="form-label">备注（选填）</label>
+            <textarea class="form-textarea" id="bookingNote" rows="2" placeholder="如：希望重点练习后场高远球"></textarea>
+          </div>
+          <div class="booking-price-box" id="bookingPriceBox"></div>
+          <button type="submit" class="btn btn-primary w-full mt-2">确认预约</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 我的预约弹窗 -->
+  <div class="modal-overlay" id="myBookingsModal">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <h3>📋 我的教练预约</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body" id="myBookingsList"></div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/video-library.js"></script>
+  <script src="js/community-seed.js"></script>
+  <script src="js/player-extra.js"></script>
+  <script src="js/venue-images.js"></script>
+  <script src="js/mock-data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/coaching.js"></script>
+</body>
+</html>
