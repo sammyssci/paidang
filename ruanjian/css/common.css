@@ -118,6 +118,36 @@ img {
   gap: 12px;
 }
 
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-gray-light);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 1.25rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.nav-panel {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: 0;
+  gap: 12px;
+}
+
+.mobile-overlay {
+  display: none;
+}
+
+.sidebar-toggle {
+  display: none;
+}
+
 /* ========== 主布局：侧边栏 + 内容区 ========== */
 .page-layout {
   display: flex;
@@ -2040,6 +2070,423 @@ img {
 
 .booking-record-card:last-child {
   margin-bottom: 0;
+}
+
+/* ========== 移动端 / 平板适配 ========== */
+@media (max-width: 1024px) {
+  .venue-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .quick-entry-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 56px;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  body.nav-open,
+  body.sidebar-open {
+    overflow: hidden;
+  }
+
+  /* 顶部导航 */
+  .top-nav {
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .nav-logo {
+    margin-right: 0;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .nav-logo-text {
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .nav-panel {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    flex: none;
+    flex-direction: column;
+    align-items: stretch;
+    max-height: calc(100vh - var(--nav-height));
+    overflow-y: auto;
+    padding: 12px 16px 20px;
+    background: #fff;
+    border-bottom: 1px solid var(--color-gray-light);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-110%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    z-index: 1050;
+  }
+
+  body.nav-open .nav-panel {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+  }
+
+  .nav-link {
+    width: 100%;
+    padding: 12px 14px;
+  }
+
+  .nav-actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--color-gray-light);
+  }
+
+  .nav-actions .btn {
+    width: 100%;
+    margin: 0 !important;
+  }
+
+  .nav-actions .text-sm {
+    text-align: center;
+    margin: 0 !important;
+  }
+
+  .mobile-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(45, 52, 54, 0.45);
+    z-index: 1040;
+  }
+
+  body.nav-open #mobileNavOverlay,
+  body.sidebar-open #mobileSidebarOverlay {
+    display: block;
+  }
+
+  /* 侧边栏抽屉 */
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    z-index: 1100;
+    box-shadow: var(--shadow-lg);
+    width: min(280px, 85vw);
+  }
+
+  body.sidebar-open .sidebar {
+    transform: translateX(0);
+  }
+
+  .sidebar-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 20px;
+    right: 16px;
+    z-index: 999;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-mint), var(--color-mint-dark));
+    color: #fff;
+    border: none;
+    box-shadow: var(--shadow-md);
+    font-size: 1.15rem;
+    cursor: pointer;
+  }
+
+  .main-content {
+    margin-left: 0;
+    max-width: 100%;
+    padding: 16px 12px 88px;
+  }
+
+  /* 栅格统一单列 */
+  .home-data-grid,
+  .venue-grid,
+  .coach-grid,
+  .asset-grid,
+  .footer-grid,
+  .detail-info-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .main-content .grid.grid-cols-3,
+  .main-content .grid.grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .quick-entry-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .home-data-grid .scalable-card {
+    min-height: auto;
+  }
+
+  .home-card-head {
+    flex-wrap: wrap;
+    padding: 12px 14px 8px;
+  }
+
+  .home-card-title {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .scale-controls-compact .scale-slider {
+    width: 48px;
+  }
+
+  .home-card-filters .card-mini-tabs {
+    flex-wrap: wrap;
+  }
+
+  .home-card-filters .card-mini-tab {
+    flex: 1 1 calc(33.33% - 6px);
+    min-width: 0;
+  }
+
+  /* 列表与卡片 */
+  .list-item {
+    flex-wrap: wrap;
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .home-data-grid .list-item .btn-sm {
+    width: 100%;
+    margin-top: 4px;
+  }
+
+  .hot-video-item {
+    flex-wrap: wrap;
+  }
+
+  .hot-video-item .btn-sm {
+    width: 100%;
+  }
+
+  .hot-video-thumb {
+    width: 64px;
+    height: 44px;
+  }
+
+  .coach-card {
+    flex-direction: column;
+  }
+
+  .carousel {
+    height: 200px;
+  }
+
+  .carousel-caption h3 {
+    font-size: 1rem;
+  }
+
+  .carousel-caption p {
+    font-size: 0.8rem;
+  }
+
+  /* 筛选与搜索 */
+  .filter-bar {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .search-box {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .search-box .form-select,
+  .search-box .btn {
+    width: 100%;
+  }
+
+  .coaching-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .coaching-hero .btn {
+    width: 100%;
+  }
+
+  .booking-steps {
+    flex-direction: column;
+    padding: 12px;
+  }
+
+  .time-slot-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* 弹窗 */
+  .modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .modal {
+    max-width: 100%;
+    max-height: 92vh;
+    border-radius: var(--radius) var(--radius) 0 0;
+    margin: 0;
+  }
+
+  .modal-lg {
+    max-width: 100%;
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* 个人中心 */
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px 16px;
+  }
+
+  .profile-header .btn {
+    width: 100%;
+  }
+
+  .guest-tip-banner {
+    justify-content: center;
+  }
+
+  .profile-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .profile-tab {
+    flex-shrink: 0;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  /* 社区 */
+  .forum-header {
+    padding: 16px;
+  }
+
+  .forum-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .post-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .post-actions {
+    flex-wrap: wrap;
+  }
+
+  .community-activity-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* 页脚 */
+  .site-footer {
+    padding: 32px 16px 20px;
+  }
+
+  .toast-container {
+    left: 12px;
+    right: 12px;
+    top: calc(var(--nav-height) + 8px);
+  }
+
+  .toast {
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-logo-text {
+    max-width: 140px;
+  }
+
+  .quick-entry-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .home-card-filters .card-mini-tab {
+    flex: 1 1 calc(50% - 6px);
+  }
+
+  .scale-controls-compact {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .detail-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .selected-venue-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .selected-venue-info img {
+    width: 100%;
+    height: 120px;
+  }
 }
 
 /* ========== 滚动条美化 ========== */

@@ -623,10 +623,12 @@
       const user = Auth.getCurrentUser();
 
       let navHtml = '<nav class="top-nav">';
+      navHtml += '<button type="button" class="nav-toggle" id="navToggle" aria-label="打开菜单">☰</button>';
       navHtml += '<a href="index.html" class="nav-logo">';
       navHtml += '<span class="nav-logo-icon">🏸</span>';
-      navHtml += '<span>羽球综合服务平台</span></a>';
+      navHtml += '<span class="nav-logo-text">羽球综合服务平台</span></a>';
 
+      navHtml += '<div class="nav-panel" id="navPanel">';
       navHtml += '<div class="nav-links">';
       NAV_ITEMS.forEach(function (item) {
         const active = item.id === currentPage ? ' active' : '';
@@ -648,9 +650,9 @@
         navHtml += '<button class="btn btn-sm btn-secondary mr-1" id="navGuestBtn">游客登录</button>';
         navHtml += '<button class="btn btn-sm btn-primary" id="navLoginBtn">登录 / 注册</button>';
       }
-      navHtml += '</div></nav>';
+      navHtml += '</div></div></nav>';
 
-      $('#topNav').html(navHtml);
+      $('#topNav').html('<div class="mobile-overlay" id="mobileNavOverlay"></div>' + navHtml);
 
       $('#navLoginBtn').on('click', function () { Modal.open('loginModal'); });
       $('#navGuestBtn').on('click', function () {
@@ -1040,12 +1042,51 @@
     }
   };
 
+  /* ========== 移动端布局 ========== */
+  function initResponsiveLayout() {
+    if ($('#sidebar').length && !$('#sidebarToggle').length) {
+      $('body').append('<button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="打开分类">📋</button>');
+    }
+    if (!$('#mobileSidebarOverlay').length) {
+      $('body').append('<div class="mobile-overlay" id="mobileSidebarOverlay"></div>');
+    }
+  }
+
+  function bindResponsiveEvents() {
+    $(document).on('click', '#navToggle', function () {
+      $('body').toggleClass('nav-open').removeClass('sidebar-open');
+    });
+    $(document).on('click', '#mobileNavOverlay', function () {
+      $('body').removeClass('nav-open');
+    });
+    $(document).on('click', '#navPanel .nav-link', function () {
+      $('body').removeClass('nav-open');
+    });
+    $(document).on('click', '#sidebarToggle', function () {
+      $('body').toggleClass('sidebar-open').removeClass('nav-open');
+    });
+    $(document).on('click', '#mobileSidebarOverlay', function () {
+      $('body').removeClass('sidebar-open');
+    });
+    $(document).on('click', '.sidebar-item', function () {
+      if (window.innerWidth <= 768) {
+        $('body').removeClass('sidebar-open');
+      }
+    });
+    $(window).on('resize.responsive', function () {
+      if (window.innerWidth > 768) {
+        $('body').removeClass('nav-open sidebar-open');
+      }
+    });
+  }
+
   /* ========== 全局初始化 ========== */
   function initCommon() {
     Storage.init();
     Auth.ensureSession();
     Modal.init();
     bindModalEvents();
+    bindResponsiveEvents();
 
     /* 注入公共弹窗 */
     if (!$('#loginModal').length) {
@@ -1055,6 +1096,7 @@
     }
 
     Navigation.renderNav();
+    initResponsiveLayout();
   }
 
   /* ========== 暴露全局 API ========== */
