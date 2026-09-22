@@ -2,14 +2,15 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>教练指导 - 羽球综合服务平台</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+  <title>我要打球 - 羽球综合服务平台</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
-      theme: { extend: { colors: { mint: { DEFAULT: '#4ECDC4', light: '#A8E6CF', dark: '#3BA99C' } } } }
+      theme: { screens: { sm: '640px', md: '1100px', lg: '1280px', xl: '1536px' }, extend: { colors: { mint: { DEFAULT: '#4ECDC4', light: '#A8E6CF', dark: '#3BA99C' } } } }
     }
   </script>
+  <link rel="icon" href="images/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/common.css">
 </head>
 <body>
@@ -21,11 +22,13 @@
     <main class="main-content">
       <div class="coaching-hero mb-6">
         <div>
-          <h1 class="text-2xl font-bold text-gray-800">🎯 教练指导 · 线下教学</h1>
-          <p class="text-gray-500 mt-1">选择羽毛球馆与认证教练，预约一对一或小班线下课程</p>
+          <h1 class="text-2xl font-bold text-gray-800">🎯 我要打球</h1>
+          <p class="text-gray-500 mt-1">选择羽毛球馆与教练，预约线下陪练或教学</p>
         </div>
         <button class="btn btn-secondary" id="myBookingsBtn">📋 我的预约</button>
       </div>
+      <div id="workspaceHint" class="mb-4"></div>
+      <div id="coachingGeoBar" class="mb-4"></div>
 
       <!-- 预约进度条 -->
       <div class="booking-steps mb-6" id="bookingSteps">
@@ -141,11 +144,16 @@
   </div>
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/splash.js"></script>
   <script src="js/video-library.js"></script>
   <script src="js/community-seed.js"></script>
   <script src="js/player-extra.js"></script>
   <script src="js/venue-images.js"></script>
+  <script src="js/shop-data.js"></script>
   <script src="js/mock-data.js"></script>
+  <script src="js/events-catalog.js"></script>
+  <script src="js/player-photos.js"></script>
+  <script src="js/event-images.js"></script>
   <script src="js/common.js"></script>
   <script src="js/coaching.js"></script>
 </body>
